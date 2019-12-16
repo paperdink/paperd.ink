@@ -128,19 +128,10 @@ void setup(void)
   delay(100);
   
   display.init(115200); // enable diagnostic output on Serial
-  
-  int16_t  x1, y1;
-  uint16_t w, h;
+
   // clear the display
   display.fillScreen(GxEPD_WHITE);
   display.setRotation(0);
-  display_weather();
-  
-  // fill background
-  display.fillRect(0, (display.height() / 3) * 2, display.width(), (display.height() / 3), GxEPD_BLACK);
-  display.fillRect((display.width() / 4), 0, 5, (display.height() / 3) * 2, GxEPD_BLACK);
-  display.fillRect((display.width() / 4), (display.height() / 3) * 2, 5, (display.height() / 3), GxEPD_WHITE);
-  
   /*
     //display status bar
     display.setFont(SECONDARY_FONT);
@@ -170,11 +161,16 @@ void setup(void)
       while(!request_finished){
         delay(500);
       }
-      
+      display_weather();
       // Sync time
       configTime(0, 0, "pool.ntp.org");
     }
   }
+
+  // fill background
+  display.fillRect(0, (display.height() / 3) * 2, display.width(), (display.height() / 3), GxEPD_BLACK);
+  display.fillRect((display.width() / 4), 0, 5, (display.height() / 3) * 2, GxEPD_BLACK);
+  display.fillRect((display.width() / 4), (display.height() / 3) * 2, 5, (display.height() / 3), GxEPD_WHITE);
   
   get_date_dtls(); // Get the date details before any time tasks
   display_calender();
