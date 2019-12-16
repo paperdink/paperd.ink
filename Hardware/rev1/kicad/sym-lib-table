@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name KaroDesk_V1-rescue)(type Legacy)(uri ${KIPRJMOD}/KaroDesk_V1-rescue.lib)(options "")(descr ""))
+)
