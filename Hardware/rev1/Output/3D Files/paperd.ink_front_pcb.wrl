@@ -10,7 +10,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/FM-B2020RGBA-HG.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/FM-B2020RGBA-HG.wrl"
     } ]
   }
 Transform {

@@ -10,7 +10,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/4_2_inch_e_paper.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/4_2_inch_e_paper.wrl"
     } ]
   }
 Transform {
@@ -18,7 +18,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/24_pin_0.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/24_pin_0.wrl"
     } ]
   }
 Transform {
@@ -27,7 +27,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/peizo_buzzer_12x12x3.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/peizo_buzzer_12x12x3.wrl"
     } ]
   }
 Transform {
@@ -36,7 +36,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/K2-1822SA-A3DW-06.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/K2-1822SA-A3DW-06.wrl"
     } ]
   }
 Transform {
@@ -45,7 +45,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/Q13FC1350000400.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/Q13FC1350000400.wrl"
     } ]
   }
 Transform {
@@ -54,7 +54,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -63,7 +63,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -72,7 +72,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -81,7 +81,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -90,7 +90,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -99,7 +99,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -108,7 +108,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -117,7 +117,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -126,7 +126,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -135,7 +135,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -144,7 +144,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -153,7 +153,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0603_1608Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0603_1608Metric.wrl"
     } ]
   }
 Transform {
@@ -162,7 +162,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0805_2012Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0805_2012Metric.wrl"
     } ]
   }
 Transform {
@@ -171,7 +171,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0805_2012Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0805_2012Metric.wrl"
     } ]
   }
 Transform {
@@ -180,7 +180,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -189,7 +189,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/ESP32-WROOM-32.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/ESP32-WROOM-32.wrl"
     } ]
   }
 Transform {
@@ -198,7 +198,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/TSSOP-20_4.4x6.5mm_P0.65mm.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/TSSOP-20_4.4x6.5mm_P0.65mm.wrl"
     } ]
   }
 Transform {
@@ -207,7 +207,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/User Library-micro-sd-card-1.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/User Library-micro-sd-card-1.wrl"
     } ]
   }
 Transform {
@@ -216,7 +216,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -225,7 +225,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/D_SOD-123.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/D_SOD-123.wrl"
     } ]
   }
 Transform {
@@ -234,7 +234,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm.wrl"
     } ]
   }
 Transform {
@@ -243,7 +243,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23-6.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23-6.wrl"
     } ]
   }
 Transform {
@@ -252,7 +252,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23-6.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23-6.wrl"
     } ]
   }
 Transform {
@@ -261,7 +261,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23-5.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23-5.wrl"
     } ]
   }
 Transform {
@@ -270,7 +270,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -279,7 +279,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -288,7 +288,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -297,7 +297,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -306,7 +306,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -315,7 +315,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -324,7 +324,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -333,7 +333,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -342,7 +342,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -351,7 +351,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -360,7 +360,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -369,7 +369,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -378,7 +378,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -387,7 +387,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -396,7 +396,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -405,7 +405,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -414,7 +414,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -423,7 +423,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -432,7 +432,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -441,7 +441,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -450,7 +450,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -459,7 +459,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -468,7 +468,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -477,7 +477,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -486,7 +486,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -495,7 +495,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -504,7 +504,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -513,7 +513,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -522,7 +522,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/R_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/R_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -531,7 +531,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -540,7 +540,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-363_SC-70-6.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-363_SC-70-6.wrl"
     } ]
   }
 Transform {
@@ -549,7 +549,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-363_SC-70-6.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-363_SC-70-6.wrl"
     } ]
   }
 Transform {
@@ -558,7 +558,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -567,7 +567,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -576,7 +576,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -585,7 +585,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/SOT-23.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/SOT-23.wrl"
     } ]
   }
 Transform {
@@ -594,7 +594,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/L_1210_3225Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/L_1210_3225Metric.wrl"
     } ]
   }
 Transform {
@@ -603,7 +603,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/micro_USB_B-SMD.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/micro_USB_B-SMD.wrl"
     } ]
   }
 Transform {
@@ -612,7 +612,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/D_SOD-123F.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/D_SOD-123F.wrl"
     } ]
   }
 Transform {
@@ -621,7 +621,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/D_SOD-123.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/D_SOD-123.wrl"
     } ]
   }
 Transform {
@@ -630,7 +630,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/D_SOD-123.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/D_SOD-123.wrl"
     } ]
   }
 Transform {
@@ -639,7 +639,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -648,7 +648,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -657,7 +657,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -666,7 +666,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -675,7 +675,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -684,7 +684,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -693,7 +693,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -702,7 +702,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -711,7 +711,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -720,7 +720,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/C_0402_1005Metric.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/C_0402_1005Metric.wrl"
     } ]
   }
 Transform {
@@ -729,7 +729,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/lipo_50x50x4.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/lipo_50x50x4.wrl"
     } ]
   }
 Transform {
@@ -738,7 +738,7 @@ Transform {
   scale 1 1 1
   children [
     Inline {
-      url "3D Files/PinHeader_2x13_P2.54mm_Vertical_SMD.wrl"
+      url "/home/rohit/Documents/KaroDesk/paperdink-master/Hardware/rev1/Output/3D Files/shapes3D/PinHeader_2x13_P2.54mm_Vertical_SMD.wrl"
     } ]
   }
 Transform {
