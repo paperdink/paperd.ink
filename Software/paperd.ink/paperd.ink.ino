@@ -41,6 +41,8 @@ extern "C" {
 #define SECONDARY_FONT &Gobold_Thin9pt7b
 
 // #########  Configuration ##########
+#include "config.h"
+/*
 #define SD_CS 21
 #define EPD_CS 22
 #define GREEN 0
@@ -52,7 +54,7 @@ const char* ssid = "*************";
 const char* password =  "*************";
 const char* todoist_token = "Bearer *************";
 const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
-
+*/
 // ###################################
 
 // E-paper
@@ -91,7 +93,7 @@ struct time_struct {
   uint8_t day_offset; // 1st day of the month offset, Monday = 0
   int   year;
 };
-struct time_struct now;
+RTC_DATA_ATTR struct time_struct now;
 
 #define uS_TO_S_FACTOR 1000000  //Conversion factor for micro seconds to seconds
 
@@ -161,11 +163,12 @@ void setup(void)
       while(!request_finished){
         delay(500);
       }
-      display_weather();
       // Sync time
       configTime(0, 0, "pool.ntp.org");
     }
   }
+
+  display_weather();
 
   // fill background
   display.fillRect(0, (display.height() / 3) * 2, display.width(), (display.height() / 3), GxEPD_BLACK);
