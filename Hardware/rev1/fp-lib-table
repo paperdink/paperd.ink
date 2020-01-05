@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name "karo_industries")(type "KiCad")(uri "${KIPRJMOD}/karo_industries.pretty")(options "")(descr ""))
-)

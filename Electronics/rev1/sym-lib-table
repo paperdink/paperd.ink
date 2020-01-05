@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "KaroDesk_V1-rescue")(type "Legacy")(uri "${KIPRJMOD}/paperd.ink_V1-rescue.lib")(options "")(descr ""))
+  (lib (name "papered_ink_logo")(type "Legacy")(uri "${KIPRJMOD}/papered_ink_logo.lib")(options "")(descr ""))
+)
