@@ -24,5 +24,5 @@ Checkout hackaday post for project logs at https://hackaday.io/project/168668-pa
 - Check battery circuit for the double transistor one
 - Add provision in next rev to eliminate GPIO expander?
 - Change voltage regulator for a lower quiescent current
-- Change the battery charger, error in schematic
+- Change the battery charger symbol, error in schematic
 - Pull-up resistor on the ~CHG pin
