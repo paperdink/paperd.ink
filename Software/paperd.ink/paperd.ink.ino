@@ -17,6 +17,9 @@
 #include "WiFi.h"
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
+#include "driver/adc.h"
+#include <esp_wifi.h>
+#include <esp_bt.h>
 
 extern "C" {
 #include "sh2lib.h"
@@ -24,7 +27,6 @@ extern "C" {
 
 #define seekSet seek
 
-// include library, include base class, make path known
 #include <GxEPD.h>
 #include <GxGDEW042T2/GxGDEW042T2.h>      // 4.2" b/w
 
@@ -32,6 +34,7 @@ extern "C" {
 #include <GxIO/GxIO.h>
 
 
+#include "PCF8574.h"
 #include "Gobold_Thin25pt7b.h"
 #include "Gobold_Thin9pt7b.h"
 #include <Fonts/FreeMonoBold9pt7b.h>
@@ -42,43 +45,26 @@ extern "C" {
 
 // #########  Configuration ##########
 #include "config.h"
-/*
-#define SD_CS 21
-#define EPD_CS 22
-#define GREEN 0
-#define BLUE 2
-#define RED 5
-#define TZ_ENV "UTC-05:30" //See: https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html  
-#define TIME_TO_SLEEP  55        //Time ESP32 will go to sleep (in seconds)
-const char* ssid = "*************";
-const char* password =  "*************";
-const char* todoist_token = "Bearer *************";
-const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
-*/
 // ###################################
 
 // E-paper
-GxIO_Class io(SPI, /*CS=5*/ EPD_CS, /*DC=*/ 26, /*RST=*/ 17);
-GxEPD_Class display(io, /*RST=*/ 17, /*BUSY=*/ 35);
+GxIO_Class io(SPI, /*CS=5*/ EPD_CS, /*DC=*/ EPD_DC, /*RST=*/ EPD_RST_DUM);
+GxEPD_Class display(io, /*RST=*/ EPD_RST_DUM, /*BUSY=*/ EPD_BUSY);
+
+// PCF8574 GPIO extender
+PCF8574 pcf8574(PCF_I2C_ADDR, SDA, SCL);
 
 // todo list definitions
 bool request_finished = false;
 #define tasks_size 1500 // about 500 bytes per task
 StaticJsonDocument<tasks_size> tasks;
 char http_response[tasks_size];
+
+// weather definitions
 #define weather_size 1000
 StaticJsonDocument<weather_size> weather_json;
 uint16_t resp_pointer = 0;
 uint8_t todo_items_num = 3;
-
-// function declaration with default parameter
-void drawBitmapFromSD(const char *filename, int16_t x, int16_t y, bool with_color = true);
-
-uint8_t wifi_connected = 1;
-
-RTC_DATA_ATTR int bootCount = 0;
-RTC_DATA_ATTR char weather_icon[15] = "Error.bmp";
-RTC_DATA_ATTR char todo_items[3][30];
 
 // Time definitions
 struct time_struct {
@@ -97,20 +83,38 @@ RTC_DATA_ATTR struct time_struct now;
 
 #define uS_TO_S_FACTOR 1000000  //Conversion factor for micro seconds to seconds
 
+// function declaration with default parameter
+void drawBitmapFromSD(const char *filename, int16_t x, int16_t y, bool with_color = true);
+
+uint8_t wifi_connected = 1;
+
+RTC_DATA_ATTR long long bootCount = 0;
+RTC_DATA_ATTR char weather_icon[15] = "Error.bmp";
+RTC_DATA_ATTR char todo_items[3][30];
+
 void setup(void)
 {
   if (bootCount == 0) { // RGTODO: Add wakeup reason check also?
-    pinMode(GREEN, OUTPUT);
-    pinMode(BLUE, OUTPUT);
-    pinMode(RED, OUTPUT);
-    digitalWrite(BLUE, HIGH);
-    digitalWrite(GREEN, HIGH);
-    digitalWrite(RED, HIGH);
+    pinMode(GREEN_LED_PIN, OUTPUT);
+    pinMode(BLUE_LED_PIN, OUTPUT);
+    pinMode(RED_LED_PIN, OUTPUT);
+    digitalWrite(BLUE_LED_PIN, HIGH);
+    digitalWrite(GREEN_LED_PIN, HIGH);
+    digitalWrite(RED_LED_PIN, HIGH);
   }
   
   Serial.begin(115200);
   Serial.println();
   Serial.println("Paperd.ink");
+  
+  pcf8574.pinMode(EPD_EN, OUTPUT);
+  pcf8574.pinMode(EPD_RES, OUTPUT);
+  pcf8574.pinMode(SD_EN, OUTPUT);
+  pcf8574.pinMode(BATT_EN, OUTPUT);
+  pcf8574.begin();
+
+  Serial.println("Turning things on");
+  pcf8574.digitalWrite(EPD_EN, LOW);
   
   Serial.print("Initializing SD card...");
   if (!SD.begin(SD_CS))
@@ -128,9 +132,14 @@ void setup(void)
     Serial.println("OK!");
   }
   delay(100);
-  
+
+  pcf8574.digitalWrite(EPD_RES, LOW);
+  delay(50);
+  pcf8574.digitalWrite(EPD_RES, HIGH);
+  delay(50);
   display.init(115200); // enable diagnostic output on Serial
 
+  
   // clear the display
   display.fillScreen(GxEPD_WHITE);
   display.setRotation(0);
@@ -181,9 +190,31 @@ void setup(void)
   display_time(); // display time should be at the end as it controls the refresh type
   
   //display.powerDown();
+  Serial.println("Turning off everything");
+  pcf8574.digitalWrite(SD_EN, HIGH);
+  pcf8574.digitalWrite(BATT_EN, HIGH);
+  pcf8574.digitalWrite(EPD_EN, HIGH);
+  
+  pcf8574.digitalWrite(EPD_RES, LOW);
+  delay(50);
+  pcf8574.digitalWrite(EPD_RES, HIGH);
+  
   ++bootCount;
+
+  // Prepare to go to sleep
+  if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+    btStop();
+  
+    adc_power_off();
+    esp_wifi_stop();
+    esp_bt_controller_disable();
+  }
+  
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
-  Serial.println("Going to sleep...");
+  Serial.printf("Going to sleep %d time...",bootCount);
+  // Go to sleep
   esp_deep_sleep_start();
 }
 
@@ -570,7 +601,7 @@ int8_t get_date_dtls() {
   // But change the header '"Mon   Tue   Wed   Thu   Fri   Sat   Sun"' as well above.
   // currently +7 => Monday
   // +1 => Sunday
-  now.day_offset = ((1 + y + (y / 4) - (y / 100) + (y / 400) + ((31 * m) / 12)) % 7) + 7;
+  now.day_offset = (((1 + y + (y / 4) - (y / 100) + (y / 400) + ((31 * m) / 12)) % 7) + 7) % 7;
 
   // convert to 12 hour
   if (now.mil_hour > 12) {
@@ -579,7 +610,7 @@ int8_t get_date_dtls() {
     now.hour = now.mil_hour;
   }
 
-  Serial.printf("Time is %d %d:%d:%d on %s on the %d/%d/%d . It is a %s. day_offset: %d",now.mil_hour,now.hour,now.min,now.sec,now.wday,now.mday,now.month_num,now.year, now.month, now.day_offset);
+  Serial.printf("Time is %d %d:%d:%d on %s on the %d/%d/%d . It is the month of %s. day_offset: %d\n",now.mil_hour,now.hour,now.min,now.sec,now.wday,now.mday,now.month_num,now.year, now.month, now.day_offset);
   return 0;
 }
 
@@ -688,7 +719,7 @@ int8_t Start_WiFi(const char* ssid, const char* password){
  while (WiFi.status() != WL_CONNECTED ) {
    delay(500);
    Serial.print(".");
-   if(connAttempts > 20) return -1;
+   if(connAttempts > 40) return -1;
    connAttempts++;
  }
  Serial.println("");
