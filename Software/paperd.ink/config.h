@@ -1,3 +1,12 @@
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <Adafruit_GFX.h>
+#include <gfxfont.h>
+#include "Gobold_Thin25pt7b.h"
+#include "Gobold_Thin9pt7b.h"
+
 // I2C pins
 #define SDA 16
 #define SCL 17
@@ -26,7 +35,7 @@
 #define LEDC_TIMER_13_BIT  13
 // use 5000 Hz as a LEDC base frequency
 #define LEDC_BASE_FREQ     5000
-int fade_amounrt = 5;
+//extern int fade_amount;
 
 // PCF8574 pins
 #define EPD_EN P0
@@ -39,10 +48,40 @@ int fade_amounrt = 5;
 #define EXT_GPIO3 P7
 #define PCF_I2C_ADDR 0x20
 
-#define TZ_ENV "UTC-05:30" //See: https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html  
-#define TIME_TO_SLEEP  55        //Time ESP32 will go to sleep (in seconds)
+// LiPo Charger
+#define CHARGING_PIN 36
+// Battry Voltage
+#define BATTERY_VOLTAGE 34
 
-const char* ssid = "*************";
-const char* password =  "*************";
-const char* todoist_token = "Bearer *************";
-const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
+// Fonts
+#define PRIMARY_FONT &Gobold_Thin25pt7b
+#define SECONDARY_FONT &Gobold_Thin9pt7b
+
+// Time ESP32 will go to sleep (in seconds)
+#define TIME_TO_SLEEP  55
+
+// todo list definitions
+// memory allocated for getting json output from todoist
+#define MAX_TODO_ITEMS 3
+#define tasks_size MAX_TODO_ITEMS*500 // about 500 bytes per task
+extern RTC_DATA_ATTR char todo_items[MAX_TODO_ITEMS][30];
+extern uint16_t resp_pointer;
+// memory to get the http response
+extern char http_response[tasks_size]; // RGTODO: Make it dynamically allocated?
+extern bool request_finished;
+
+// weather definitions
+#define weather_size 1000
+extern RTC_DATA_ATTR char weather_icon[15];
+
+// To keep track of number of times device booted
+extern RTC_DATA_ATTR long long bootCount;
+
+#define TZ_ENV "UTC-05:30" //See: https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html  
+
+extern const char* ssid;
+extern const char* password;
+extern const char* todoist_token;
+extern const char* openweathermap_link;
+
+#endif /* CONFIG_H */
