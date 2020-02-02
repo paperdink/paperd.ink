@@ -56,6 +56,7 @@
 // Fonts
 #define PRIMARY_FONT &Gobold_Thin25pt7b
 #define SECONDARY_FONT &Gobold_Thin9pt7b
+#define SMALL_FONT &Gobold_Thin9pt7b
 
 // Time ESP32 will go to sleep (in seconds)
 #define TIME_TO_SLEEP  55
@@ -81,7 +82,7 @@ extern RTC_DATA_ATTR long long bootCount;
 
 extern const char* ssid;
 extern const char* password;
-extern const char* todoist_token;
-extern const char* openweathermap_link;
-
+extern String todoist_token_base;
+extern String openweathermap_link_base;
+extern String time_zone;
 #endif /* CONFIG_H */

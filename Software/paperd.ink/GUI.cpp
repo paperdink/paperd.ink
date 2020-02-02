@@ -240,22 +240,27 @@ void display_config_gui(GxEPD_Class* display){
   display->setTextSize(1);
   display->setTextColor(GxEPD_BLACK);
 
-  display->getTextBounds(F("Welcome"), 0, 0, &x, &y, &w, &h);
+  display->getTextBounds(F("Hi!"), 0, 0, &x, &y, &w, &h);
   display->setCursor(config_base_x-(w/2),config_base_y-(h/2));
-  display->println(F("Welcome"));
+  display->println(F("Hi!"));
   prev_height = h;
-  
+
   display->setFont(SECONDARY_FONT);
-  display->getTextBounds(F("Press reset and connect to"), 0, 0, &x, &y, &w, &h);
+  display->getTextBounds(F("Lets setup your paperd.ink"), 0, 0, &x, &y, &w, &h);
   display->setCursor(config_base_x-(w/2), config_base_y-(h/2)+prev_height);
-  display->println(F("Press reset and connect to"));
-  prev_height = (display->height()/2)-(h/2)+prev_height;
+  display->println(F("Lets setup your paperd.ink"));
+  prev_height += (display->height()/2)-(h/2);
+  
+  display->getTextBounds(F("Press reset and connect to"), 0, 0, &x, &y, &w, &h);
+  display->setCursor(config_base_x-(w/2), prev_height+h+10);
+  display->print(F("Press reset and connect to"));
+  prev_height += h;
   
   display->getTextBounds(F("paperd.ink_0000000000"), 0, 0, &x, &y, &w, &h);
   display->setCursor(config_base_x-(w/2), prev_height+h+10);
   display->print(F("paperd.ink_"));
   display->println(String(ESP_getChipId()));
-  
+
   display->update();
   delay(2000);
   display->updateWindow(0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, false);
@@ -293,21 +298,21 @@ void todo_task(void *args){
   if (sh2lib_connect(&hd, "https://api.todoist.com") != ESP_OK) {
     Serial.println("Error connecting to todoist server");
     vTaskDelete(NULL);
+    return;
   }
 
   Serial.println("Connected");
-
+  String todoist_token_string = todoist_token_base + "";
   const nghttp2_nv nva[] = { SH2LIB_MAKE_NV(":method", "GET"),
                              SH2LIB_MAKE_NV(":scheme", "https"),
                              SH2LIB_MAKE_NV(":authority", hd.hostname),
                              SH2LIB_MAKE_NV(":path", "/rest/v1/tasks"),
-                             SH2LIB_MAKE_NV("Authorization", todoist_token)
+                             SH2LIB_MAKE_NV("Authorization", todoist_token_string.c_str())
                            };
 
   sh2lib_do_get_with_nv(&hd, nva, sizeof(nva) / sizeof(nva[0]), handle_get_response);
 
   while (1) {
-
     if (sh2lib_execute(&hd) != ESP_OK) {
       Serial.println("Error in send/receive");
       break;
@@ -323,6 +328,7 @@ void todo_task(void *args){
   Serial.println("Disconnected");
   
   vTaskDelete(NULL);
+  return;
 }
 
 // display to-do list
@@ -369,7 +375,8 @@ RTC_DATA_ATTR char weather_icon[15] = "Error.bmp";
 
 const char* fetch_weather(){
   HTTPClient http;
-  http.begin(openweathermap_link);
+  String openweathermap_link = openweathermap_link_base + "";
+  http.begin(openweathermap_link.c_str());
   int httpCode = http.GET();
   StaticJsonDocument<weather_size> weather_json;
   
@@ -385,7 +392,7 @@ const char* fetch_weather(){
       http.end(); //Free the resources
       return "Error.bmp";
     }else{
-      
+      Serial.println("Got weather details");
     }
   }else {
     Serial.println("Error on HTTP request");
@@ -516,13 +523,13 @@ void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charg
   int16_t batt_base_x = 325;
     
   Serial.printf("Battery charging: %d\n",not_charging);
-  //if (not_charging) {
+  if (not_charging) {
       //not charging
       drawBitmapFrom_SD_ToBuffer(display, SPIFFS, "Battery.bmp", batt_base_x, batt_base_y, 0);
-  //}else{
+  }else{
       //charging
-  //    drawBitmapFrom_SD_ToBuffer(&display, SPIFFS, "Charging.bmp", batt_base_x, batt_base_y, 0);
-  //}
+      drawBitmapFrom_SD_ToBuffer(display, SPIFFS, "Charging.bmp", batt_base_x, batt_base_y, 0);
+  }
   
   Serial.printf("Battery voltage: %fV\n",batt_voltage);
   display->setCursor(batt_base_x+28, batt_base_y+9);
@@ -531,7 +538,18 @@ void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charg
   display->setTextColor(GxEPD_BLACK);
   display->print(batt_voltage);
   display->print("V");
-  display->fillRect(batt_base_x+3, batt_base_y+3, 13*(batt_voltage/4.2), 8, GxEPD_BLACK);  
+  display->fillRect(batt_base_x+3, batt_base_y+3, 13*(batt_voltage/4.2), 8, GxEPD_BLACK);
+
+}
+
+void display_wifi(GxEPD_Class* display, uint8_t status){
+  int16_t batt_base_y = 1;
+  int16_t batt_base_x = 290;
+  if(status == 1){
+    drawBitmapFrom_SD_ToBuffer(display, SPIFFS, "Wifi.bmp", batt_base_x, batt_base_y, 0);
+  }else{
+    drawBitmapFrom_SD_ToBuffer(display, SPIFFS, "Wifi_off.bmp", batt_base_x, batt_base_y, 0);
+  }
 }
 
 void display_background(GxEPD_Class* display){

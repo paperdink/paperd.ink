@@ -23,7 +23,7 @@ extern RTC_DATA_ATTR struct time_struct now;
 
 #define uS_TO_S_FACTOR 1000000  //Conversion factor for micro seconds to seconds
 
-int8_t get_date_dtls();
+int8_t get_date_dtls(String time_zone);
 int8_t set_time();
 
 #endif /* TIME_H */

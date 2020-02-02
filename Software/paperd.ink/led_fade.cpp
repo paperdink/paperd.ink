@@ -4,7 +4,6 @@
 #include "config.h"
 #include "led_fade.h"
 
-
 uint8_t brightness = 0;    // how bright the LED is
 uint8_t fadeAmount = 5;    // how many points to fade the LED by
 TaskHandle_t wifi_fade_handle = NULL;

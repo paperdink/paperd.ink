@@ -78,8 +78,8 @@ class WiFiManager
   public:
     WiFiManager();
 
-    boolean       autoConnect();
-    boolean       autoConnect(char const *apName, char const *apPassword = NULL);
+    boolean       autoConnect(uint8_t STA_first);
+    boolean       autoConnect(char const *apName, char const *apPassword = NULL, uint8_t STA_first = 1);
 
     //if you want to always start the config portal, without trying to connect first
     boolean       startConfigPortal();

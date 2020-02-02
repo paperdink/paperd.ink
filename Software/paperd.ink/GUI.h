@@ -17,6 +17,7 @@ void display_weather(GxEPD_Class* display);
 void display_calender(GxEPD_Class* display);
 void display_time(GxEPD_Class* display);
 void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charging);
+void display_wifi(GxEPD_Class* display, uint8_t status);
 void display_background(GxEPD_Class* display);
 void display_update(GxEPD_Class* display);
 

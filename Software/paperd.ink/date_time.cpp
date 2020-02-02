@@ -18,11 +18,12 @@
 #include "date_time.h"
 
 RTC_DATA_ATTR struct time_struct now; // keep track of time
+String time_zone_base = "UTC";
 
 // Time APIs
-int8_t get_date_dtls() {
-  // Set timezone to Indian Standard Time
-  setenv("TZ", "UTC-05:30", 1);
+int8_t get_date_dtls(String time_zone) {
+  String time_zone_string = time_zone_base+time_zone;
+  setenv("TZ", time_zone_string.c_str(), 1);
   
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){

@@ -135,12 +135,12 @@ void WiFiManager::setupConfigPortal() {
 
 }
 
-boolean WiFiManager::autoConnect() {
+boolean WiFiManager::autoConnect(uint8_t STA_first) {
   String ssid = "paperd.ink_" + String(ESP_getChipId());
-  return autoConnect(ssid.c_str(), NULL);
+  return autoConnect(ssid.c_str(), NULL, STA_first);
 }
 
-boolean WiFiManager::autoConnect(char const *apName, char const *apPassword) {
+boolean WiFiManager::autoConnect(char const *apName, char const *apPassword, uint8_t STA_first) {
   DEBUG_WM(F(""));
   DEBUG_WM(F("AutoConnect"));
 
@@ -148,14 +148,16 @@ boolean WiFiManager::autoConnect(char const *apName, char const *apPassword) {
   //String ssid = getSSID();
   //String pass = getPassword();
 
-  // attempt to connect; should it fail, fall back to AP
-  WiFi.mode(WIFI_STA);
-
-  if (connectWifi("", "") == WL_CONNECTED)   {
-    DEBUG_WM(F("IP Address:"));
-    DEBUG_WM(WiFi.localIP());
-    //connected
-    return true;
+  if(STA_first){
+    // attempt to connect; should it fail, fall back to AP
+    WiFi.mode(WIFI_STA);
+  
+    if (connectWifi("", "") == WL_CONNECTED)   {
+      DEBUG_WM(F("IP Address:"));
+      DEBUG_WM(WiFi.localIP());
+      //connected
+      return true;
+    }
   }
 
   return startConfigPortal(apName, apPassword);

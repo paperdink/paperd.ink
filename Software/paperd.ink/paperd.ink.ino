@@ -25,6 +25,12 @@
 
 // #########  Configuration ##########
 #include "config.h"
+
+const char* ssid = "*************";
+const char* password =  "*************";
+const char* todoist_token = "Bearer *************";
+const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
+String time_zone = "-05:30";
 // ###################################
 
 #include "PCF8574.h"
@@ -44,33 +50,62 @@ GxEPD_Class display(io, /*RST=*/ EPD_RST_DUM, /*BUSY=*/ EPD_BUSY);
 // PCF8574 GPIO extender
 PCF8574 pcf8574(PCF_I2C_ADDR, SDA, SCL);
 
-uint8_t wifi_connected = 1;
+// WiFi Manager for initial configuration
+WiFiManager wifiManager;
+WiFiManagerParameter city("city", "City", NULL, 256, "");
+WiFiManagerParameter country("country", "Country", NULL, 256, "");
+WiFiManagerParameter todoist_token("todoist_token", "Todoist token", NULL, 40, "");
+WiFiManagerParameter openweather_appkey("openweather_appkey", "OpenWeather appkey", NULL, 32, "");
+//WiFiManagerParameter time_zone("time_zone", "Timezone", NULL, 5, "");
+
+RTC_DATA_ATTR uint8_t wifi_connected = 0; // keep track if wifi was connected and according update the symbol
 RTC_DATA_ATTR long long bootCount = 0; // keep track of boots
+esp_sleep_wakeup_cause_t wakeup_reason;
 
 void setup(void)
 {
-  if (bootCount == 0) { // RGTODO: Add wakeup reason check also?
-    pinMode(GREEN_LED_PIN, OUTPUT);
-    pinMode(BLUE_LED_PIN, OUTPUT);
-    pinMode(RED_LED_PIN, OUTPUT);
-    digitalWrite(BLUE_LED_PIN, HIGH);
-    digitalWrite(GREEN_LED_PIN, HIGH);
-    digitalWrite(RED_LED_PIN, HIGH);
-  }
-  
   Serial.begin(115200);
   Serial.println();
   Serial.println("paperd.ink");
-  
+
   pcf8574.pinMode(EPD_EN, OUTPUT);
   pcf8574.pinMode(EPD_RES, OUTPUT);
   pcf8574.pinMode(SD_EN, OUTPUT);
   pcf8574.pinMode(BATT_EN, OUTPUT);
   pcf8574.begin();
 
-  Serial.println("Turning things on");
+  // Power up EPD
   pcf8574.digitalWrite(EPD_EN, LOW);
+  pcf8574.digitalWrite(EPD_RES, LOW);
+  delay(50);
+  pcf8574.digitalWrite(EPD_RES, HIGH);
+  delay(50);
+  display.init(115200); // enable diagnostic output on Serial
+
+  if (bootCount == 0) {
+    pinMode(GREEN_LED_PIN, OUTPUT);
+    pinMode(BLUE_LED_PIN, OUTPUT);
+    pinMode(RED_LED_PIN, OUTPUT);
+    digitalWrite(BLUE_LED_PIN, HIGH);
+    digitalWrite(GREEN_LED_PIN, HIGH);
+    digitalWrite(RED_LED_PIN, HIGH);
+    if(wakeup_reason != ESP_SLEEP_WAKEUP_TIMER && wakeup_reason != ESP_SLEEP_WAKEUP_TOUCHPAD){
+      // first boot into config mode and delete any old credentials
+      WiFi.mode(WIFI_STA);
+      WiFi.disconnect(true,true);
+      delay(1000);
+      
+      if(config_paperd_ink(&display) < 0){
+        // Error occured while configuring so reset paperd_ink
+        WiFi.mode(WIFI_STA);
+        WiFi.disconnect(true,true);
+        delay(1000);
+        esp_deep_sleep_start();
+      }
+    }
+  }
   
+/*
   Serial.print("Initializing SD card...");
   if (!SD.begin(SD_CS))
   {
@@ -78,6 +113,7 @@ void setup(void)
   }else{
     Serial.println("OK!");
   }
+*/
   
   Serial.print("Initializing SPIFFS...");
   if(!SPIFFS.begin(true)){
@@ -88,22 +124,17 @@ void setup(void)
   }
   delay(100);
 
-  // Power up EPD
-  pcf8574.digitalWrite(EPD_RES, LOW);
-  delay(50);
-  pcf8574.digitalWrite(EPD_RES, HIGH);
-  delay(50);
-  display.init(115200); // enable diagnostic output on Serial
-
   // clear the display
   display.fillScreen(GxEPD_WHITE);
   display.setRotation(0);
     
   if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
     // All WiFi related activity once every 6 hours
-    if(Start_WiFi(ssid,password)<0){
-      Serial.printf("Can't connect to %s.",ssid);
+    if(wifi_manager_connect(&wifiManager,1) < 0){
+      Serial.printf("Can't connect to WiFi");
+      wifi_connected = 0;
     }else{
+      wifi_connected = 1;
       // Fetch tasks
       request_finished = false;
       xTaskCreate(todo_task, "todo_task", (1024 * 32), NULL, 5, NULL);
@@ -129,9 +160,10 @@ void setup(void)
   //float batt_voltage = 4.1;
 
   // Get the date details before any date/time related tasks
-  get_date_dtls(); 
+  get_date_dtls(time_zone);
   
   display_battery(&display,batt_voltage,not_charging);
+  display_wifi(&display,wifi_connected);
   display_weather(&display);
   display_background(&display);
   display_calender(&display);
@@ -150,18 +182,16 @@ void setup(void)
   delay(50);
   pcf8574.digitalWrite(EPD_RES, HIGH);
   
-  ++bootCount;
-
   // Prepare to go to sleep
   if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
     btStop();
-  
     esp_wifi_stop();
     esp_bt_controller_disable();
   }
-  
+
+  ++bootCount;
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.printf("Going to sleep %d time...",bootCount);
   // Go to sleep
@@ -173,17 +203,74 @@ void loop()
 
 }
 
-// WiFi API
-int8_t Start_WiFi(const char* ssid, const char* password){
- int connAttempts = 0;
- Serial.println("\r\nConnecting to: "+String(ssid));
- WiFi.begin(ssid, password);
- while (WiFi.status() != WL_CONNECTED ) {
-   delay(500);
-   Serial.print(".");
-   if(connAttempts > 40) return -1;
-   connAttempts++;
- }
- Serial.println("");
- return 0;
+int8_t config_paperd_ink(GxEPD_Class* display){
+  display_config_gui(display);
+  
+  if(wifi_manager_connect(&wifiManager,0) < 0){
+    return -1;
+  }
+
+  return 0;
+}
+
+// WiFi Manager APIs
+void configModeCallback(WiFiManager *myWiFiManager) {
+  Serial.println("Entered config mode");
+  Serial.println(WiFi.softAPIP());
+  //if you used auto generated SSID, print it
+  Serial.println(myWiFiManager->getConfigPortalSSID());
+  
+  // AP has started
+  stop_led_fade();
+  start_led_fade(240); // 240 is reddish hue
+}
+
+void sta_connected(){
+  // Device is connected to proper SSID
+  Serial.println("Connected to new AP.");
+  stop_led_fade();
+// delay(3000); // delay required for smooth fade
+//  start_led_fade(80);
+  digitalWrite(GREEN_LED_PIN,LOW); 
+  delay(500);
+  digitalWrite(GREEN_LED_PIN,HIGH);
+}
+
+void user_connected(){
+  // User has connected to the AP we are broadcasting
+  Serial.println("User connected to our AP.");
+  stop_led_fade();
+  digitalWrite(BLUE_LED_PIN,LOW);
+
+// delay(2000); // delay required for smooth fade
+// start_led_fade(180);
+}
+
+int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first){
+  
+  //Sets timeout until configuration portal gets turned off
+  //useful to make it all retry or go to sleep in seconds
+  wifiManager->setTimeout(180);
+  wifiManager->setConnectTimeout(30);
+  
+  wifiManager->setAPCallback(configModeCallback);
+  wifiManager->setSaveConfigCallback(sta_connected);
+  wifiManager->setUserConnectedCallback(user_connected);
+  
+  wifiManager->addParameter(&city);
+  wifiManager->addParameter(&country);
+  wifiManager->addParameter(&todoist_token);  
+  wifiManager->addParameter(&openweather_appkey); 
+  //wifiManager->addParameter(&time_zone); 
+  
+  //fetches ssid and pass and tries to connect
+  //if it does not connect it starts an access point with Paperd.Ink_<chip_id>
+  //and goes into a blocking loop awaiting configuration
+  if(!wifiManager->autoConnect(STA_first)) {
+    Serial.println("Failed to connect and hit timeout");
+    stop_led_fade();
+    return -1;
+  }
+  Serial.println("Succesful connection to WiFi");
+  return 0;
 }
