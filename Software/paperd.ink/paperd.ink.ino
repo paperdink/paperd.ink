@@ -25,11 +25,19 @@
 
 // #########  Configuration ##########
 #include "config.h"
-
+/*
 const char* ssid = "*************";
 const char* password =  "*************";
 const char* todoist_token = "Bearer *************";
 const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
+*/
+
+//const char* ssid = "f50c1ety";
+//const char* password =  "studnigu";
+//const char* ssid = "gujarathi";
+//const char* password =  "avrmicro!";
+String todoist_token_base = "Bearer 3326738d4cdd28a7923f4aff6559bdb61155bc8c";
+String openweathermap_link_base = "http://api.openweathermap.org/data/2.5/weather?q=Pune,india&appid=6f08bcf115cc4d5ee1c5b4967a1d6279";
 String time_zone = "-05:30";
 // ###################################
 
@@ -89,7 +97,7 @@ void setup(void)
     digitalWrite(BLUE_LED_PIN, HIGH);
     digitalWrite(GREEN_LED_PIN, HIGH);
     digitalWrite(RED_LED_PIN, HIGH);
-    if(wakeup_reason != ESP_SLEEP_WAKEUP_TIMER && wakeup_reason != ESP_SLEEP_WAKEUP_TOUCHPAD){
+    /*if(wakeup_reason != ESP_SLEEP_WAKEUP_TIMER && wakeup_reason != ESP_SLEEP_WAKEUP_TOUCHPAD){
       // first boot into config mode and delete any old credentials
       WiFi.mode(WIFI_STA);
       WiFi.disconnect(true,true);
@@ -102,7 +110,7 @@ void setup(void)
         delay(1000);
         esp_deep_sleep_start();
       }
-    }
+    }*/
   }
   
 /*
@@ -191,8 +199,14 @@ void setup(void)
     esp_bt_controller_disable();
   }
 
+  //if(bootCount == 0){
+    get_date_dtls(time_zone);
+    esp_sleep_enable_timer_wakeup((60-now.sec) * uS_TO_S_FACTOR);
+  //}else{
+    //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  //}
+  
   ++bootCount;
-  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.printf("Going to sleep %d time...",bootCount);
   // Go to sleep
   esp_deep_sleep_start();

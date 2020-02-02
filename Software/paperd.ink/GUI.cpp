@@ -236,7 +236,7 @@ void display_config_gui(GxEPD_Class* display){
   display->fillScreen(GxEPD_WHITE);
   display->setRotation(0);
   
-  display->setFont(PRIMARY_FONT);
+  display->setFont(LARGE_FONT);
   display->setTextSize(1);
   display->setTextColor(GxEPD_BLACK);
 
@@ -245,7 +245,7 @@ void display_config_gui(GxEPD_Class* display){
   display->println(F("Hi!"));
   prev_height = h;
 
-  display->setFont(SECONDARY_FONT);
+  display->setFont(MED_FONT);
   display->getTextBounds(F("Lets setup your paperd.ink"), 0, 0, &x, &y, &w, &h);
   display->setCursor(config_base_x-(w/2), config_base_y-(h/2)+prev_height);
   display->println(F("Lets setup your paperd.ink"));
@@ -268,7 +268,7 @@ void display_config_gui(GxEPD_Class* display){
 
 
 // Fetch tasks
-RTC_DATA_ATTR char todo_items[MAX_TODO_ITEMS][30];
+RTC_DATA_ATTR char todo_items[MAX_TODO_ITEMS][MAX_TODO_LENGTH];
 uint16_t resp_pointer = 0;
 // memory to get the http response
 char http_response[tasks_size]; // RGTODO: Make it dynamically allocated?
@@ -349,24 +349,43 @@ void display_tasks(GxEPD_Class* display){
       Serial.println("Tasks:");
       for(uint8_t i = 0; i<todo_items_num; i++){
         const char* task = tasks[i]["content"];
-        strncpy(todo_items[i],task,25);
-        Serial.println(todo_items[i]);
+        if(tasks[i]["content"]){
+          strncpy(todo_items[i],task,MAX_TODO_LENGTH-1);
+          todo_items[i][MAX_TODO_LENGTH] = '\0';
+          Serial.println(todo_items[i]);
+        }else{
+          todo_items[i][0] = NULL;
+        }
       }
     }
   }
   
-  display->setFont(SECONDARY_FONT);
+  display->setFont(MED_FONT);
   display->setTextColor(GxEPD_WHITE);
-  int16_t td_list_base_y = 220;
+  int16_t td_list_head_base_y = 220;
   int16_t td_list_base_x = 115;
   display->setTextSize(1);
 
-  display->setCursor(td_list_base_x, td_list_base_y);
+  display->setCursor(td_list_base_x, td_list_head_base_y);
   display->println("To-Do List");
-  display->getTextBounds("To-Do List", td_list_base_x, td_list_base_y, &x1, &y1, &w, &h);
+  display->getTextBounds("To-Do List", td_list_base_x, td_list_head_base_y, &x1, &y1, &w, &h);
+  uint16_t td_list_base_y = td_list_head_base_y + 5;
+  display->setFont(SMALL_FONT);
+  display->getTextBounds("item MAX_TODO_LENGTH", td_list_base_x, td_list_head_base_y, &x1, &y1, &w, &h); // dummy item to get font height and MAX_TODO_LENGTH width
+  uint8_t j = 0;
   for(uint8_t i = 0; i<todo_items_num; i++){
-    display->setCursor(td_list_base_x, td_list_base_y + ((i + 1)*h) + ((i + 1) * 5));
-    display->println(todo_items[i]);
+    if(todo_items[i] != NULL){
+      uint16_t y = td_list_base_y + ((j + 1) * h) + ((j + 1) * 3);
+      uint16_t x = td_list_base_x;
+      if(y > display->height()){
+        j=0;
+        y = td_list_base_y + ((j + 1) * h) + ((j + 1) * 3);
+        x = td_list_base_x + w;
+      }
+      display->setCursor(x,y);
+      display->println(todo_items[i]);
+      j++;
+    }
   }
 }
 
@@ -433,7 +452,7 @@ void display_time(GxEPD_Class* display){
   uint16_t w, h;
   
   //display time
-  display->setFont(PRIMARY_FONT);
+  display->setFont(LARGE_FONT);
   display->setTextSize(1);
   display->setTextColor(GxEPD_BLACK);
   int16_t time_base_y = 60;
@@ -462,7 +481,7 @@ void display_calender(GxEPD_Class* display){
   // display calender
   int16_t  x1, y1;
   uint16_t w, h;
-  display->setFont(SECONDARY_FONT);
+  display->setFont(MED_FONT);
   display->setTextSize(1);
   display->setTextColor(GxEPD_BLACK);
   int16_t calender_base_y = 40;
@@ -505,13 +524,13 @@ void display_calender(GxEPD_Class* display){
 
   // display day
   display->setTextColor(GxEPD_WHITE);
-  display->setFont(PRIMARY_FONT);
+  display->setFont(LARGE_FONT);
   display->setTextSize(1);
   display->setCursor(33, 250);
   display->println(now.mday);
 
   // display month
-  display->setFont(SECONDARY_FONT);
+  display->setFont(MED_FONT);
   display->setTextSize(2);
   display->setCursor(30, 290);
   display->println(now.month);
@@ -520,7 +539,7 @@ void display_calender(GxEPD_Class* display){
 // display battery status
 void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charging){
   int16_t batt_base_y = 3;
-  int16_t batt_base_x = 325;
+  int16_t batt_base_x = 324;
     
   Serial.printf("Battery charging: %d\n",not_charging);
   if (not_charging) {
@@ -532,8 +551,8 @@ void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charg
   }
   
   Serial.printf("Battery voltage: %fV\n",batt_voltage);
-  display->setCursor(batt_base_x+28, batt_base_y+9);
-  display->setFont(SECONDARY_FONT);
+  display->setCursor(batt_base_x+28, batt_base_y+7);
+  display->setFont(SMALL_FONT);
   display->setTextSize(1);
   display->setTextColor(GxEPD_BLACK);
   display->print(batt_voltage);
@@ -544,7 +563,7 @@ void display_battery(GxEPD_Class* display, float batt_voltage, uint8_t not_charg
 
 void display_wifi(GxEPD_Class* display, uint8_t status){
   int16_t batt_base_y = 1;
-  int16_t batt_base_x = 290;
+  int16_t batt_base_x = 295;
   if(status == 1){
     drawBitmapFrom_SD_ToBuffer(display, SPIFFS, "Wifi.bmp", batt_base_x, batt_base_y, 0);
   }else{
