@@ -25,10 +25,6 @@
 
 // #########  Configuration ##########
 #include "config.h"
-
-const char* todoist_token = "Bearer *************";
-const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/*************";
-String time_zone = "-05:30";
 // ###################################
 
 #include "PCF8574.h"
@@ -50,11 +46,20 @@ PCF8574 pcf8574(PCF_I2C_ADDR, SDA, SCL);
 
 // WiFi Manager for initial configuration
 WiFiManager wifiManager;
-WiFiManagerParameter city("city", "City", NULL, 256, "");
-WiFiManagerParameter country("country", "Country", NULL, 256, "");
-WiFiManagerParameter todoist_token("todoist_token", "Todoist token", NULL, 40, "");
-WiFiManagerParameter openweather_appkey("openweather_appkey", "OpenWeather appkey", NULL, 32, "");
-//WiFiManagerParameter time_zone("time_zone", "Timezone", NULL, 5, "");
+WiFiManagerParameter city_param("city", "City", NULL, 30, "");
+WiFiManagerParameter country_param("country", "Country", NULL, 30, "");
+WiFiManagerParameter todoist_token_param("todoist_token", "Todoist token", NULL, 41, "");
+WiFiManagerParameter openweather_appkey_param("openweather_appkey", "OpenWeather appkey", NULL, 33, "");
+WiFiManagerParameter time_zone_param("time_zone", "Timezone", NULL, 7, "");
+
+RTC_DATA_ATTR char city_string[30];
+RTC_DATA_ATTR char country_string[30];
+RTC_DATA_ATTR char todoist_token_string[42];
+RTC_DATA_ATTR char openweather_appkey_string[34];
+RTC_DATA_ATTR char time_zone_string[7];
+
+String todoist_token_base = "Bearer ";
+String openweathermap_link_base = "http://api.openweathermap.org/data/2.5/weather?q={p},{c}&appid={i}";
 
 RTC_DATA_ATTR uint8_t wifi_connected = 0; // keep track if wifi was connected and according update the symbol
 RTC_DATA_ATTR long long bootCount = 0; // keep track of boots
@@ -158,7 +163,7 @@ void setup(void)
   //float batt_voltage = 4.1;
 
   // Get the date details before any date/time related tasks
-  get_date_dtls(time_zone);
+  get_date_dtls(time_zone_string);
   
   display_battery(&display,batt_voltage,not_charging);
   display_wifi(&display,wifi_connected);
@@ -190,14 +195,20 @@ void setup(void)
   }
 
   //if(bootCount == 0){
-    get_date_dtls(time_zone);
+    get_date_dtls(time_zone_string);
     esp_sleep_enable_timer_wakeup((60-now.sec) * uS_TO_S_FACTOR);
   //}else{
     //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   //}
   
-  ++bootCount;
-  Serial.printf("Going to sleep %d time...",bootCount);
+  bootCount = 1;
+  Serial.println(city_string);
+  Serial.println(country_string);
+  Serial.println(todoist_token_string);
+  Serial.println(openweather_appkey_string);
+  Serial.println(time_zone_string);
+
+  Serial.printf("Going to sleep...");
   // Go to sleep
   esp_deep_sleep_start();
 }
@@ -261,11 +272,11 @@ int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first){
   wifiManager->setSaveConfigCallback(sta_connected);
   wifiManager->setUserConnectedCallback(user_connected);
   
-  wifiManager->addParameter(&city);
-  wifiManager->addParameter(&country);
-  wifiManager->addParameter(&todoist_token);  
-  wifiManager->addParameter(&openweather_appkey); 
-  //wifiManager->addParameter(&time_zone); 
+  wifiManager->addParameter(&city_param);
+  wifiManager->addParameter(&country_param);
+  wifiManager->addParameter(&todoist_token_param);  
+  wifiManager->addParameter(&openweather_appkey_param); 
+  wifiManager->addParameter(&time_zone_param); 
   
   //fetches ssid and pass and tries to connect
   //if it does not connect it starts an access point with Paperd.Ink_<chip_id>
@@ -276,5 +287,14 @@ int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first){
     return -1;
   }
   Serial.println("Succesful connection to WiFi");
+
+  // copy values to RTC memory
+  // RGTODO: Save to spiffs in json
+  strncpy(city_string,city_param.getValue(),30);
+  strncpy(country_string,country_param.getValue(),30);
+  strncpy(todoist_token_string,todoist_token_param.getValue(),42);
+  strncpy(openweather_appkey_string,openweather_appkey_param.getValue(),34);
+  strncpy(time_zone_string,time_zone_param.getValue(),7);
+  
   return 0;
 }

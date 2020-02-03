@@ -77,9 +77,12 @@ extern RTC_DATA_ATTR char weather_icon[15];
 // To keep track of number of times device booted
 extern RTC_DATA_ATTR long long bootCount;
 
-extern const char* ssid;
-extern const char* password;
 extern String todoist_token_base;
 extern String openweathermap_link_base;
-extern String time_zone;
+extern RTC_DATA_ATTR char city_string[30];
+extern RTC_DATA_ATTR char country_string[30];
+extern RTC_DATA_ATTR char todoist_token_string[42];
+extern RTC_DATA_ATTR char openweather_appkey_string[34];
+extern RTC_DATA_ATTR char time_zone_string[7];
+
 #endif /* CONFIG_H */

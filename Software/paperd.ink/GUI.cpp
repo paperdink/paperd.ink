@@ -302,12 +302,12 @@ void todo_task(void *args){
   }
 
   Serial.println("Connected");
-  String todoist_token_string = todoist_token_base + "";
+  String todoist_token = todoist_token_base + todoist_token_string;
   const nghttp2_nv nva[] = { SH2LIB_MAKE_NV(":method", "GET"),
                              SH2LIB_MAKE_NV(":scheme", "https"),
                              SH2LIB_MAKE_NV(":authority", hd.hostname),
                              SH2LIB_MAKE_NV(":path", "/rest/v1/tasks"),
-                             SH2LIB_MAKE_NV("Authorization", todoist_token_string.c_str())
+                             SH2LIB_MAKE_NV("Authorization", todoist_token.c_str())
                            };
 
   sh2lib_do_get_with_nv(&hd, nva, sizeof(nva) / sizeof(nva[0]), handle_get_response);
@@ -396,12 +396,17 @@ RTC_DATA_ATTR char weather_icon[15] = "Error.bmp";
 
 const char* fetch_weather(){
   HTTPClient http;
-  String openweathermap_link = openweathermap_link_base + "";
-  http.begin(openweathermap_link.c_str());
+  //String openweathermap_link = openweathermap_link_base + openweather_appkey_string;
+  openweathermap_link_base.replace("{p}", city_string);
+  openweathermap_link_base.replace("{c}", country_string);
+  openweathermap_link_base.replace("{i}", openweather_appkey_string);
+  
+  Serial.printf("Openweathermap link: %s \n",openweathermap_link_base.c_str());
+  http.begin(openweathermap_link_base.c_str());
   int httpCode = http.GET();
   StaticJsonDocument<weather_size> weather_json;
   
-  if (httpCode > 0) { //Check for the returning code
+  if (httpCode == 200) { //Check for the returning code
     String payload = http.getString();
     Serial.println(httpCode);
     Serial.println(payload);
@@ -512,7 +517,7 @@ void display_calender(GxEPD_Class* display){
           int16_t  x2, y2;
           uint16_t w2, h2;
           display->getTextBounds(str, calender_base_x + (i * (w / 7)) - num_offset, calender_base_y + ((j + 1)*h) + ((j + 1) * 7), &x2, &y2, &w2, &h2);
-          display->fillRect(x2 - 2, y2 - 2, w2 + 4, h2 + 4, GxEPD_BLACK);
+          display->fillRect(x2 - 4, y2 - 4, w2 + 8, h2 + 8, GxEPD_BLACK);
           display->setTextColor(GxEPD_WHITE);
         } else {
           display->setTextColor(GxEPD_BLACK);
