@@ -372,19 +372,21 @@ void display_tasks(GxEPD_Class* display){
   uint16_t td_list_base_y = td_list_head_base_y + 5;
   display->setFont(SMALL_FONT);
   display->getTextBounds("item MAX_TODO_LENGTH", td_list_base_x, td_list_head_base_y, &x1, &y1, &w, &h); // dummy item to get font height and MAX_TODO_LENGTH width
-  uint8_t j = 0;
+
+  uint16_t y = td_list_base_y;
+  uint16_t x = td_list_base_x;
+  uint8_t row = 1;
   for(uint8_t i = 0; i<todo_items_num; i++){
     if(todo_items[i] != NULL){
-      uint16_t y = td_list_base_y + ((j + 1) * h) + ((j + 1) * 3);
-      uint16_t x = td_list_base_x;
+      y = td_list_base_y +(row * h) + (row * 3);
       if(y > display->height()){
-        j=0;
-        y = td_list_base_y + ((j + 1) * h) + ((j + 1) * 3);
-        x = td_list_base_x + w;
+        row = 1;
+        y = td_list_base_y + (row * h) + (row * 3);
+        x += w;
       }
       display->setCursor(x,y);
       display->println(todo_items[i]);
-      j++;
+      row++;
     }
   }
 }
