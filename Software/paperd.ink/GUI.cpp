@@ -336,7 +336,7 @@ void display_tasks(GxEPD_Class* display){
   uint8_t todo_items_num = MAX_TODO_ITEMS;    
   int16_t  x1, y1;
   uint16_t w, h;
-  if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
+  if(wifi_update || first_boot == 1){
     StaticJsonDocument<tasks_size> tasks;
     // Deserialize the JSON document
     DeserializationError error = deserializeJson(tasks, http_response);
@@ -442,14 +442,15 @@ const char* fetch_weather(){
   }
 }
 
-void display_weather(GxEPD_Class* display){
+void display_weather(GxEPD_Class* display, const char* icon){
   int16_t weather_base_y = 135;
   int16_t weather_base_x = 25;
-  if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
+  if(wifi_update || first_boot == 1){
     //update every 6 hours
     display->fillRect(weather_base_x - 5, weather_base_y - 5, 55 + 5, weather_base_y + 55 + 5, GxEPD_WHITE);
-    const char* icon = fetch_weather();
-    strcpy(weather_icon,icon);
+    if(icon != NULL){
+      strcpy(weather_icon,icon);
+    }
   }
   drawBitmapFrom_SD_ToBuffer(display, SPIFFS, weather_icon, weather_base_x, weather_base_y, 0);
 }
@@ -586,7 +587,7 @@ void display_background(GxEPD_Class* display){
 }
 
 void display_update(GxEPD_Class* display){
-   if (!(now.min % 5) || bootCount == 0) {
+   if (!(now.min % 5) || first_boot == 1) {
     // Full update once every 5 mins and on the first boot
     display->update();
     delay(2000);

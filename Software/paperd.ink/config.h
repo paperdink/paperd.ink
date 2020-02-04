@@ -59,6 +59,13 @@
 #define MED_FONT &Gobold_Thin9pt7b
 #define SMALL_FONT &Gobold_Thin7pt7b
 
+// Update interval
+// Note: 0 should not be used!!
+#define UPDATE_HOUR_INTERVAL 1  // update after every UPDATE_HOUR_INTERVAL hours, 0 should not be used
+#define UPDATE_MIN_INTERVAL 3   // and at UPDATE_MIN mins, 0 should not be used
+// for example to update afer every 6 hours, UPDATE_HOUR_INTERVAL = 6 and UPDATE_MIN = 60
+// to update every 15 mins, UPDATE_HOUR_INTERVAL = 1 and UPDATE_MIN = 15
+
 // todo list definitions
 // memory allocated for getting json output from todoist
 #define MAX_TODO_ITEMS 10
@@ -74,8 +81,10 @@ extern bool request_finished;
 #define weather_size 1000
 extern RTC_DATA_ATTR char weather_icon[15];
 
-// To keep track of number of times device booted
-extern RTC_DATA_ATTR long long bootCount;
+// To keep track of config done
+extern RTC_DATA_ATTR uint8_t config_done;
+extern RTC_DATA_ATTR uint8_t first_boot;
+extern uint8_t wifi_update;
 
 extern String todoist_token_base;
 extern String openweathermap_link_base;
@@ -85,4 +94,7 @@ extern RTC_DATA_ATTR char todoist_token_string[42];
 extern RTC_DATA_ATTR char openweather_appkey_string[34];
 extern RTC_DATA_ATTR char time_zone_string[7];
 
+extern char buf[2048];
+int8_t save_config(const char* config);
+int8_t load_config();
 #endif /* CONFIG_H */

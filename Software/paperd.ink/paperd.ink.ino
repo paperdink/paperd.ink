@@ -60,9 +60,14 @@ RTC_DATA_ATTR char time_zone_string[7];
 
 String todoist_token_base = "Bearer ";
 String openweathermap_link_base = "http://api.openweathermap.org/data/2.5/weather?q={p},{c}&appid={i}";
+const char* weather = NULL;
+char buf[2048];
+uint8_t wifi_update = 0;
 
 RTC_DATA_ATTR uint8_t wifi_connected = 0; // keep track if wifi was connected and according update the symbol
-RTC_DATA_ATTR long long bootCount = 0; // keep track of boots
+RTC_DATA_ATTR uint8_t config_done = 0; // keep track of config done
+RTC_DATA_ATTR uint8_t first_boot = 1; // check if it is first boot
+
 esp_sleep_wakeup_cause_t wakeup_reason;
 
 void setup(void)
@@ -83,41 +88,9 @@ void setup(void)
   delay(50);
   pcf8574.digitalWrite(EPD_RES, HIGH);
   delay(50);
-  display.init(115200); // enable diagnostic output on Serial
-
-  if (bootCount == 0) {
-    pinMode(GREEN_LED_PIN, OUTPUT);
-    pinMode(BLUE_LED_PIN, OUTPUT);
-    pinMode(RED_LED_PIN, OUTPUT);
-    digitalWrite(BLUE_LED_PIN, HIGH);
-    digitalWrite(GREEN_LED_PIN, HIGH);
-    digitalWrite(RED_LED_PIN, HIGH);
-    if(wakeup_reason != ESP_SLEEP_WAKEUP_TIMER && wakeup_reason != ESP_SLEEP_WAKEUP_TOUCHPAD){
-      // first boot into config mode and delete any old credentials
-      WiFi.mode(WIFI_STA);
-      WiFi.disconnect(true,true);
-      delay(1000);
-      
-      if(config_paperd_ink(&display) < 0){
-        // Error occured while configuring so reset paperd_ink
-        WiFi.mode(WIFI_STA);
-        WiFi.disconnect(true,true);
-        delay(1000);
-        esp_deep_sleep_start();
-      }
-    }
-  }
-  
-/*
-  Serial.print("Initializing SD card...");
-  if (!SD.begin(SD_CS))
-  {
-    Serial.println("failed!");
-  }else{
-    Serial.println("OK!");
-  }
-*/
-  
+  //display.init(115200); // enable diagnostic output on Serial
+  display.init();
+ 
   Serial.print("Initializing SPIFFS...");
   if(!SPIFFS.begin(true)){
     Serial.println("failed!");
@@ -127,14 +100,45 @@ void setup(void)
   }
   delay(100);
 
+  if (first_boot == 1) {
+    Serial.printf("#######First boot#######\n");
+    pinMode(GREEN_LED_PIN, OUTPUT);
+    pinMode(BLUE_LED_PIN, OUTPUT);
+    pinMode(RED_LED_PIN, OUTPUT);
+    digitalWrite(BLUE_LED_PIN, HIGH);
+    digitalWrite(GREEN_LED_PIN, HIGH);
+    digitalWrite(RED_LED_PIN, HIGH);
+    
+    load_config();
+    if(wakeup_reason != ESP_SLEEP_WAKEUP_TIMER && wakeup_reason != ESP_SLEEP_WAKEUP_TOUCHPAD && config_done == 0){
+      // if config is not done then
+      // delete any old credentials
+      // and configure device
+      WiFi.mode(WIFI_STA);
+      WiFi.disconnect(true,true);
+      delay(1000);
+      
+      if(config_paperd_ink(&display) < 0){
+        // Error occured while configuring so go to sleep until reset again
+        WiFi.mode(WIFI_STA);
+        WiFi.disconnect(true,true);
+        delay(1000);
+        esp_deep_sleep_start();
+      }
+    }
+  }
+
+  wifi_update = (now.hour % UPDATE_HOUR_INTERVAL == 0 && now.min % UPDATE_MIN_INTERVAL == 0);
+  
   // clear the display
   display.fillScreen(GxEPD_WHITE);
   display.setRotation(0);
     
-  if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
-    // All WiFi related activity once every 6 hours
-    if(wifi_manager_connect(&wifiManager,1) < 0){
-      Serial.printf("Can't connect to WiFi");
+  if(wifi_update || first_boot == 1){
+    // All WiFi related activity once every UPDATE_HOUR_INTERVAL hours
+    Serial.println("Connecting to WiFi...");
+    if(Start_WiFi() < 0){
+      Serial.println("Can't connect to WiFi");
       wifi_connected = 0;
     }else{
       wifi_connected = 1;
@@ -144,6 +148,7 @@ void setup(void)
       while(!request_finished){
         delay(500);
       }
+      weather = fetch_weather();
       // Sync time
       //set_time(); //set time to a predefined value
       configTime(0, 0, "pool.ntp.org");
@@ -167,7 +172,7 @@ void setup(void)
   
   display_battery(&display,batt_voltage,not_charging);
   display_wifi(&display,wifi_connected);
-  display_weather(&display);
+  display_weather(&display,weather);
   display_background(&display);
   display_calender(&display);
   display_tasks(&display);
@@ -184,30 +189,22 @@ void setup(void)
   pcf8574.digitalWrite(EPD_RES, LOW);
   delay(50);
   pcf8574.digitalWrite(EPD_RES, HIGH);
-  
+
   // Prepare to go to sleep
-  if((now.hour % 6 == 0 && now.min == 0) || bootCount == 0){
+  if(wifi_update || first_boot == 1){
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
     btStop();
-    esp_wifi_stop();
+    if(wifi_connected){
+      // if check is not there then device crashes
+      esp_wifi_stop();
+    }
     esp_bt_controller_disable();
   }
 
-  //if(bootCount == 0){
-    get_date_dtls(time_zone_string);
-    esp_sleep_enable_timer_wakeup((60-now.sec) * uS_TO_S_FACTOR);
-  //}else{
-    //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
-  //}
-  
-  bootCount = 1;
-  Serial.println(city_string);
-  Serial.println(country_string);
-  Serial.println(todoist_token_string);
-  Serial.println(openweather_appkey_string);
-  Serial.println(time_zone_string);
-
+  first_boot = 0;
+  get_date_dtls(time_zone_string);
+  esp_sleep_enable_timer_wakeup((60-now.sec) * uS_TO_S_FACTOR);
   Serial.printf("Going to sleep...");
   // Go to sleep
   esp_deep_sleep_start();
@@ -221,7 +218,7 @@ void loop()
 int8_t config_paperd_ink(GxEPD_Class* display){
   display_config_gui(display);
   
-  if(wifi_manager_connect(&wifiManager,0) < 0){
+  if(wifi_manager_connect(&wifiManager,0,1) < 0){
     return -1;
   }
 
@@ -261,11 +258,13 @@ void user_connected(){
 // start_led_fade(180);
 }
 
-int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first){
+int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first, uint8_t save_config_flash){
   
-  //Sets timeout until configuration portal gets turned off
-  //useful to make it all retry or go to sleep in seconds
+  // Sets timeout until configuration portal gets turned off
+  // useful to make it all retry or go to sleep in seconds
   wifiManager->setTimeout(180);
+
+  // Sets timeout for connecting as STA to new AP
   wifiManager->setConnectTimeout(30);
   
   wifiManager->setAPCallback(configModeCallback);
@@ -288,13 +287,35 @@ int8_t wifi_manager_connect(WiFiManager* wifiManager, uint8_t STA_first){
   }
   Serial.println("Succesful connection to WiFi");
 
-  // copy values to RTC memory
-  // RGTODO: Save to spiffs in json
-  strncpy(city_string,city_param.getValue(),30);
-  strncpy(country_string,country_param.getValue(),30);
-  strncpy(todoist_token_string,todoist_token_param.getValue(),42);
-  strncpy(openweather_appkey_string,openweather_appkey_param.getValue(),34);
-  strncpy(time_zone_string,time_zone_param.getValue(),7);
-  
+  if(save_config_flash){
+      config_done = 1;
+      // save config only during the first connection
+      StaticJsonDocument<2048>config;
+      config["city"] = city_param.getValue();
+      config["country"] = country_param.getValue();
+      config["todoist_token"] = todoist_token_param.getValue();
+      config["openweather_appkey"] = openweather_appkey_param.getValue();
+      config["timezone"] = time_zone_param.getValue();
+      config["config_done"] = config_done;
+      serializeJson(config, buf);
+      save_config(buf);
+
+      load_config();
+  }
   return 0;
+}
+
+int8_t Start_WiFi(){
+ uint8_t connAttempts = 0;
+ WiFi.begin();
+ while (WiFi.status() != WL_CONNECTED ) {
+   delay(500);
+   Serial.print(".");
+   if(connAttempts > 40){
+    return -1;
+   }
+   connAttempts++;
+ }
+ Serial.println("");
+ return 0;
 }
