@@ -216,14 +216,6 @@ void drawBitmapFrom_SD_ToBuffer(GxEPD_Class* display, fs::FS &fs, const char *fi
   }
 }
 
-/*
-void drawBitmapFromSD(fs::FS &fs, const char *filename, int16_t x, int16_t y, bool with_color)
-{
-  drawBitmapFrom_SD_ToBuffer(fs, filename, x, y, with_color);
-  display->update();
-}
-*/
-
 // Display APIs
 // display config page
 void display_config_gui(GxEPD_Class* display){
@@ -297,6 +289,7 @@ void todo_task(void *args){
 
   if (sh2lib_connect(&hd, "https://api.todoist.com") != ESP_OK) {
     Serial.println("Error connecting to todoist server");
+    request_finished = true;
     vTaskDelete(NULL);
     return;
   }

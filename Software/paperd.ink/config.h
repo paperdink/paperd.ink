@@ -61,8 +61,8 @@
 
 // Update interval
 // Note: 0 should not be used!!
-#define UPDATE_HOUR_INTERVAL 1  // update after every UPDATE_HOUR_INTERVAL hours, 0 should not be used
-#define UPDATE_MIN_INTERVAL 3   // and at UPDATE_MIN mins, 0 should not be used
+#define UPDATE_HOUR_INTERVAL 6  // update after every UPDATE_HOUR_INTERVAL hours, 0 should not be used
+#define UPDATE_MIN_INTERVAL 60   // and at UPDATE_MIN mins, 0 should not be used
 // for example to update afer every 6 hours, UPDATE_HOUR_INTERVAL = 6 and UPDATE_MIN = 60
 // to update every 15 mins, UPDATE_HOUR_INTERVAL = 1 and UPDATE_MIN = 15
 

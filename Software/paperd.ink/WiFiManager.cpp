@@ -274,7 +274,6 @@ int WiFiManager::connectWifi(String ssid, String pass) {
 #else
       esp_wifi_disconnect();
 #endif
-
       WiFi.begin();
     } else {
       DEBUG_WM("No saved credentials");
@@ -287,13 +286,14 @@ int WiFiManager::connectWifi(String ssid, String pass) {
   if(connRes == WL_CONNECT_FAILED){
     connRes = waitForConnectResult();
   }
-    
+  
   //not connected, WPS enabled, no pass - first attempt
-  //if (_tryWPS && connRes != WL_CONNECTED && pass == "") {
-  //  startWPS();
+  if (connRes != WL_CONNECTED && pass == "") {
+    WiFi.disconnect(true);
+    startWPS();
     //should be connected at the end of WPS
-  //  connRes = waitForConnectResult();
-  //}
+    connRes = waitForConnectResult();
+  }
   return connRes;
 }
 

@@ -137,7 +137,7 @@ void setup(void)
   if(wifi_update || first_boot == 1){
     // All WiFi related activity once every UPDATE_HOUR_INTERVAL hours
     Serial.println("Connecting to WiFi...");
-    if(Start_WiFi() < 0){
+    if(wifiManager.connectWifi("","") != WL_CONNECTED){
       Serial.println("Can't connect to WiFi");
       wifi_connected = 0;
     }else{
