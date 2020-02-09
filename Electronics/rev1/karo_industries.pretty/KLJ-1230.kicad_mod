@@ -1,4 +1,4 @@
-(module "KLJ-1230" (layer F.Cu) (tedit 5E0AED2D)
+(module "KLJ-1230" (layer F.Cu) (tedit 5ECE5D8B)
   (descr "12x12x3 piezo Buzzer")
   (tags "12x12x3 piezo Buzzer")
   (attr smd)
@@ -20,9 +20,9 @@
   (fp_line (start -6.07 6.07) (end -6.07 -5.93) (layer F.SilkS) (width 0.12))
   (fp_line (start 5.93 6.07) (end 5.93 -5.93) (layer F.SilkS) (width 0.12))
   (fp_line (start -6.07 -5.93) (end 5.93 -5.93) (layer F.Fab) (width 0.12))
-  (pad "1" smd rect (at -6.07 0.07) (size 1.6 4.6) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "2" smd rect (at 5.92 0.07) (size 1.6 4.6) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (model "/home/rohit/Documents/3D_Files/buzzer/peizo_buzzer_12x12x3.step"
+  (pad "1" smd rect (at -6.07 0.07) (size 1.6 4.6) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp c92bbf77-ba75-4fd7-b147-a66f4f2fb4ed))
+  (pad "2" smd rect (at 5.92 0.07) (size 1.6 4.6) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 81d55917-039b-4229-b965-182367c34213))
+  (model "${RG_3D_FILES}/buzzer/peizo_buzzer_12x12x3.step"
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

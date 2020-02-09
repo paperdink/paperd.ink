@@ -6,7 +6,7 @@ ESP32 based E-paper display
 
 ![Full Image](https://github.com/rgujju/paperdink/blob/master/Images/full.jpg?raw=true)
 
-Checkout hackaday post for project logs at https://hackaday.io/project/168668-paperdink! and our website at https://paperd.ink
+Checkout hackaday post for project logs at https://hackaday.io/project/168668-paperdink and our website at https://paperd.ink
 
 ## TO-DO
 ### Software
