@@ -62,8 +62,8 @@ int8_t set_time() {
 
   struct tm t;
   t.tm_year = 2020 - 1900;
-  t.tm_mon = 1 - 1;         // Month, 1 - jan to 12 - dec
-  t.tm_mday = 27;          // Day of the month
+  t.tm_mon = 2 - 1;         // Month, 1 - jan to 12 - dec
+  t.tm_mday = 3;          // Day of the month
   t.tm_hour = 9;
   t.tm_min = 57;
   t.tm_sec = 0;
