@@ -238,9 +238,9 @@ void display_config_gui(GxEPD_Class* display){
   prev_height = h;
 
   display->setFont(MED_FONT);
-  display->getTextBounds(F("Lets setup your paperd.ink"), 0, 0, &x, &y, &w, &h);
+  display->getTextBounds(F("Let's set up your paperd.ink"), 0, 0, &x, &y, &w, &h);
   display->setCursor(config_base_x-(w/2), config_base_y-(h/2)+prev_height);
-  display->println(F("Lets setup your paperd.ink"));
+  display->println(F("Let's set up your paperd.ink"));
   prev_height += (display->height()/2)-(h/2);
   
   display->getTextBounds(F("Press reset and connect to"), 0, 0, &x, &y, &w, &h);
