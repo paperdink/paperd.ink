@@ -1,4 +1,4 @@
-update=Sat Oct 31 12:04:39 2020
+update=Sun Nov  8 20:11:50 2020
 version=1
 last_client=kicad
 [general]
@@ -14,14 +14,14 @@ LibDir=
 [eeschema/libraries]
 [LibeditFrame]
 version=1
-[ModEditFrame]
-version=1
 [PcbFrame]
 version=1
 [SchematicFrame]
 version=1
 [sheetnames]
-1=f46713b5-48de-4b81-92ec-0b81cc0e8d55:
+1=dc50e9c8-bd5c-4735-a877-469e82fe61c4:
+[ModEditFrame]
+version=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
@@ -350,3 +350,25 @@ uViaDrill=0.1
 dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=Output/DXF/
+NetFmtName=
+SpiceAjustPassiveValues=0
+SubpartIdSeparator=0
+SubpartFirstId=65
+LabSize=50
+TextOffsetRatio=0.3
+LineThickness=6
+BusThickness=12
+WireThickness=6
+PinSymbolSize=25
+JunctionSize=40
+FieldNameTemplates=(templatefields)
+ERC_TestSimilarLabels=1
+ERC_CheckUniqueGlobalLabels=1
+ERC_CheckBusDriverConflicts=1
+ERC_CheckBusEntryConflicts=1
+ERC_CheckBusToBusConflicts=1
+ERC_CheckBusToNetConflicts=1
