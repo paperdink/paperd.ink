@@ -1,4 +1,4 @@
-update=Mon Nov  9 14:02:05 2020
+update=Tue Nov 10 10:03:30 2020
 version=1
 last_client=kicad
 [general]
@@ -48,7 +48,7 @@ ERC_CheckBusToNetConflicts=1
 version=1
 PageLayoutDescrFile=
 LastNetListRead=
-LastSTEPExportPath=
+LastSTEPExportPath=Output/3D_files/paperd.ink.step
 LastIDFExportPath=
 LastVRMLExportPath=
 LastSpecctraDSNExportPath=
