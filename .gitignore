@@ -1,0 +1,22 @@
+_autosave*
+*.kicad_pcb-bak
+*.kicad_sch-bak
+site/node_modules
+
+# Dependencies
+site/node_modules
+
+# Generated files
+site/.docusaurus
+site/.cache-loader
+
+# Misc
+site/.DS_Store
+site/.env.local
+site/.env.development.local
+site/.env.test.local
+site/.env.production.local
+
+site/npm-debug.log*
+site/yarn-debug.log*
+site/yarn-error.log*
