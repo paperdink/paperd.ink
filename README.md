@@ -1,6 +1,6 @@
 # paperd.ink
 
-![Full Image](https://github.com/rgujju/paperdink/blob/master/Images/paperdink.jpg?raw=true)
+![Full Image](https://github.com/rgujju/paperdink/blob/master/Images/paperd_ink.png?raw=true)
 
 ESP32 based E-paper display
 
