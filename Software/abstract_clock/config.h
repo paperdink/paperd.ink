@@ -6,15 +6,19 @@
 #include "Gobold_Thin9pt7b.h"
 #include "Mont_ExtraLightDEMO8pt7b.h"
 
-#define SSID     "gujarathi" // your network SSID (name of wifi network)
-#define PASSWORD "avrmicro!" // your network password
-#define TODOIST_TOKEN "Bearer 3326738d4cdd28a7923f4aff6559bdb61155bc8c"
+// DETAILS TO EDIT
+#define SSID     "*****" // your network SSID (name of wifi network)
+#define PASSWORD "*****" // your network password
+#define TODOIST_TOKEN "Bearer *******" // your todoist API key
+#define CITY "*****" // your city for weather
+#define COUNTRY "*****" // your country for weather
+#define OWM_ID "*****" // your open weather map APP ID
+#define TIME_ZONE "-05:30" // your time zone
 
-#define TIME_ZONE "-05:30"
 #define DEBUG Serial
 
 // JSON buffer size for tasks
-#define tasks_size 1500
+#define tasks_size 3000
 
 // PIN ASSIGNMENT
 
@@ -47,7 +51,6 @@
 #define CHARGING_PIN 36
 #define BATT_EN 25
 #define BATTERY_VOLTAGE 34
-
 
 // Fonts
 #define LARGE_FONT &Mont_HeavyDEMO25pt7b

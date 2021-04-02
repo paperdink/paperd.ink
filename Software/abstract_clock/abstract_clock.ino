@@ -65,6 +65,7 @@ void setup() {
   
   display_tasks(&display);
   diplay_date(&display);
+  display_weather(&display);
   
   display.update();
 

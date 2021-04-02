@@ -9,6 +9,7 @@
 #include <GxIO/GxIO.h>
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
+#include <HTTPClient.h>
 
 #include "config.h"
 #include "gui.h"
@@ -23,8 +24,11 @@ char todo_item[MAX_TODO_STR_LENGTH];
 
 const char* server = "api.todoist.com";  // Server URL
 const char* url = "/rest/v1/tasks";
-
 StaticJsonDocument<tasks_size> tasks;
+
+const char* openweathermap_link = "http://api.openweathermap.org/data/2.5/weather?q="CITY","COUNTRY"&appid="OWM_ID;
+#define weather_size 1000
+StaticJsonDocument<weather_size> weather_json;
     
 WiFiClientSecure client;
 
@@ -120,10 +124,10 @@ void display_tasks(GxEPD_Class* display){
   //  Serial.println(value["content"].as<char*>());
   //}
 
-  for(int i = 1; i< 12; i++){
-    display->setCursor(TASKS_BASE_X+5, TASKS_BASE_Y+prev_height+(h+7)*i+7);
+  for(int i = 0; i< 11; i++){
+    display->setCursor(TASKS_BASE_X+5, TASKS_BASE_Y+prev_height+(h+7)*i+20);
     task = tasks[i]["content"];
-    if(tasks[i]["content"]){
+    if(task){
       strncpy(todo_item, task, MAX_TODO_STR_LENGTH-1);
       todo_item[MAX_TODO_STR_LENGTH] = '\0';
       display->println(todo_item);
@@ -155,15 +159,42 @@ void diplay_date(GxEPD_Class* display){
   display->setCursor(DATE_BASE_X+(DATE_WIDTH/2)-(w/2), DATE_BASE_Y+prev_height+h+25);
   prev_height += h+25;
   display->println(date_str);
-
-  display->setFont(MED_FONT);
-  display->getTextBounds(F("cloudy"), 0, 0, &x, &y, &w, &h);
-  display->setCursor(DATE_BASE_X+(DATE_WIDTH/2)-(w/2), DATE_BASE_Y+prev_height+h+25);
-  display->println(F("cloudy"));
 }
 
 void display_weather(GxEPD_Class* display){
+  int16_t  x, y;
+  uint16_t w, h;
+  HTTPClient http;
+  http.begin(openweathermap_link);
+  int httpCode = http.GET();
   
+  if (httpCode > 0) { //Check for the returning code
+          String payload = http.getString();
+          Serial.println(httpCode);
+          Serial.println(payload);
+          DeserializationError error = deserializeJson(weather_json, payload);
+          // Test if parsing succeeds.
+          if (error) {
+            Serial.print(F("deserializeJson() failed: "));
+            Serial.println(error.c_str());
+            http.end();
+            return;
+          }
+  } else {
+        Serial.println("Error on HTTP request");
+        http.end();
+        return;
+  }
+  
+  const char* weather_string = weather_json["weather"][0]["main"];
+  Serial.print("It is ");
+  Serial.print(weather_string);
+  Serial.println(" outside!");
+  
+  display->setFont(MED_FONT);
+  display->getTextBounds(F("clouds"), 0, 0, &x, &y, &w, &h);
+  display->setCursor(WEATHER_BASE_X-(w/2), WEATHER_BASE_Y+h);
+  display->println(weather_string);
 }
 
 uint16_t read16(File& f)
