@@ -1,10 +1,10 @@
 # paperd.ink
 
-![Full Image](https://github.com/rgujju/paperdink/blob/master/Images/paperd_ink.png?raw=true)
+<img src="https://rgujju.github.io/paperdink/images/paperd_ink.svg" alt="Logo" width="300px">
 
 ESP32 based E-paper display
 
-![Full Image](https://github.com/rgujju/paperdink/blob/master/Images/full.jpg?raw=true)
+<img src="https://rgujju.github.io/paperdink/images/abstract_clock_side_image.png" alt="Image" width="500px">
 
 Checkout hackaday post for project logs at https://hackaday.io/project/168668-paperdink!
 
