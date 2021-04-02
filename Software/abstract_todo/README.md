@@ -1,4 +1,4 @@
-## Abstract clock
+## Abstract To-Do
 
 ![Full Image](https://rgujju.github.io/paperdink/images/abstract_clock_front_image.png)
 
@@ -6,5 +6,5 @@
 Edit the config.h file with your details.
 
 ### Fonts used
-https://7ntypes.com/gobold-font-updated/
-https://www.fontfabric.com/fonts/mont/
+- https://7ntypes.com/gobold-font-updated/
+- https://www.fontfabric.com/fonts/mont/
