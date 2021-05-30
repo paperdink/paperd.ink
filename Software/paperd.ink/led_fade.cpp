@@ -81,7 +81,7 @@ void led_fade(void *pvParameters){
     ledcWrite(LEDC_CHANNEL_R, R);
     ledcWrite(LEDC_CHANNEL_G, G);
     ledcWrite(LEDC_CHANNEL_B, B);
-    delay(20);
+    vTaskDelay((TickType_t) 20 / portTICK_PERIOD_MS);
   }
 }
 

@@ -9,10 +9,10 @@ int8_t deleteFile(fs::FS &fs, const char * path){
     if(fs.remove(path)){
         Serial.println("- file deleted");
         return 0;
-    } else {
-        Serial.println("- delete failed");
-        return -1;
     }
+
+    Serial.println("- delete failed");
+    return -1;
 }
 
 int8_t readFile(fs::FS &fs, const char* path, char* buf){
@@ -45,10 +45,9 @@ int8_t writeFile(fs::FS &fs, const char* path, const char* message){
     if(file.print(message)){
         Serial.println("- file written");
         return 0;
-    } else {
-        Serial.println("- frite failed");
-        return -1;
     }
+    Serial.println("- write failed");
+    return -1;
 }
 
 int8_t save_config(const char* config){
@@ -66,9 +65,8 @@ int8_t load_config(){
     Serial.print(F("deserializeJson() failed for config: "));
     Serial.println(error.c_str());
     return -2;
-  }else{
-    Serial.println("Got config details");
   }
+  Serial.println("Got config details");
   
   strncpy(city_string,config["city"],30);
   strncpy(country_string,config["country"],30);
