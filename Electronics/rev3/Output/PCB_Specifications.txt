@@ -1,0 +1,10 @@
+Layers: 2 Layer board
+Dimensions: 92.1x78.1mm
+PCB Thickness: 1.6mm
+Soldermask colour: White
+Silkscreen colour: Black
+Surface Finish: Lead Free HASL
+RoHS Compliant: Yes
+Outer Copper Weight: 1oz
+Fully tested: Yes
+

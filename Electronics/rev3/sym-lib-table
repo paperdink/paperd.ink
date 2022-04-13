@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "021_labs")(type "KiCad")(uri "${_021_LABS_LIB}/021Labs-hw.kicad_sym")(options "")(descr ""))
+)
