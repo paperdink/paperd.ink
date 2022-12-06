@@ -1,6 +1,6 @@
 <img src="https://paperdink.github.io/images/paperd_ink.svg" alt="Logo" width="300px">
 
-<img src="https://paperdink.github.io/images/abstract_clock_side_image.png" alt="Image" width="500px">
+<img src="https://github.com/paperdink/PaperdInk-Library/raw/main/extras/Main_Image.png" alt="Image" width="500px">
 
 # paperd.ink - pretty & powerful
 
