@@ -1,6 +1,9 @@
-<img src="https://paperdink.github.io/images/paperd_ink.svg" alt="Logo" width="300px">
-
-<img src="https://github.com/paperdink/PaperdInk-Library/raw/main/extras/Main_Image.png" alt="Image" width="500px">
+<p align="center">
+  <br/>
+  <img src="https://paperdink.github.io/images/paperd_ink.svg" alt="Logo" width="300px">
+  <br/>
+  <img src="https://github.com/paperdink/PaperdInk-Library/raw/main/extras/Main_Image.png" alt="Image" width="500px">
+</p>
 
 # paperd.ink - pretty & powerful
 
